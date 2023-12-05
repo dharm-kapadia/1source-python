@@ -1,0 +1,4 @@
+requests==2.31.0
+rich==13.7.0
+setuptools==68.0.0
+wheel==0.41.2
