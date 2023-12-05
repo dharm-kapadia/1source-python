@@ -3,7 +3,7 @@
 """
     <To Do>
     
-    The program will log output to a log file called '1source-pyton.log'
+    The program will log output to a log file called '1source-python.log'
 """
 
 __author__ = "Dharm Kapadia"
@@ -28,7 +28,7 @@ logger: logging.Logger = configure_logging(logging, app_conf.log_file, app_conf.
 
 def print_output(data_type: str, data: str) -> None:
     """
-        Print output of received data
+        Print output of received data to the console
     """
     pprint(f"1Source {data_type} for {app_conf.username}:")
     pprint(data)
@@ -40,6 +40,7 @@ def main():
     :return:
     """
 
+    # Set up command line parser options
     parser = argparse.ArgumentParser(description='1Source Python command line example')
     parser.add_argument(
         '-g',
@@ -91,6 +92,7 @@ def main():
     args = parser.parse_args()
     vargs: dict = vars(args)
 
+    # Get an auth token from 1Source
     token: str = get_auth_token()
 
     if "g" in vargs and vargs["g"] is not None:
@@ -154,7 +156,6 @@ def main():
                 logger.error(f"Unsupported 1Source endpoint '{entity}'")
                 pprint(f"Unsupported 1Source endpoint '{entity}'")
                 exit(1)
-        exit(0)
 
     if "a" in vargs and vargs["a"] is not None:
         entity_id: str = vargs["a"]

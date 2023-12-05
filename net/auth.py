@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-    Python class to get an auth token for 1Source
+    Python file to get an auth token for 1Source
     
 """
 

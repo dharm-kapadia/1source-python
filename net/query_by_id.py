@@ -27,6 +27,7 @@ def get_by_id(endpoint: str, entity_id: str, token: str, history: bool = False) 
         "accept": "application/json"
     }
 
+    # Get
     url: str = f"{endpoint}/{entity_id}"
 
     if history:
