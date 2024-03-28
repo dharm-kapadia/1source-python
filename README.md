@@ -15,7 +15,7 @@ https://github.com/dharm-kapadia/1source-c++
 
 To view sample code in Go, please see the following GitHub repository:
 
-https://github.com/dharm-kapadia/1source-python
+https://github.com/dharm-kapadia/1source-go
 
 
 ## Getting Started
@@ -52,42 +52,30 @@ Install the required 3rd-party Python packages into the created conda environmen
 The 1source-python application can be run directly from the command line in the terminal after it is successfully built. The following comman will run the application:
 
 ```
-1source-python> ./1source-python
+1source-python> python main.py -h
 ```
 
 The output of that will show the command line options available:
 
 ```
-1source-python> ./1source-python
--t: required.
-Usage: 1Source [--help] [--version] -t VAR [-g VAR] [-a agreement_id] [-e events] [-c contract_id] [-p party_id] [-i JSON]
-Note: -t is required
+(1source-python) C:\dev\1source-python>python main.py -h
+usage: main.py [-h] [-g <Entity to query>] [-a <Trade Agreement Id>] [-e <Event Id>] [-c <Contract Id>]
+               [-ch <Contract Id>] [-p <Party Id>]
 
-Optional arguments:
-  -h, --help     shows help message and exits
-  -v, --version  prints version information and exits
+1Source Python command line example
 
-  -t             1Source configuration TOML file [required]
-  -g             1Source API Endpoint to query [agreements, contracts, events, parties, returns, rerates, recalls, buyins]
-  -a             1Source API Endpoint to query trade agreements by agreement_id
-  -e             1Source API Endpoint to query events by event_id
-  -c             1Source API Endpoint to query contracts by contract_id
-  -p             1Source API Endpoint to query parties by party_id
+options:
+  -h, --help            show this help message and exit
+  -g <Entity to query>  1Source API Endpoint to query
+  -a <Trade Agreement Id>
+                        1Source API Endpoint to query Trade Agreements by agreement_id
+  -e <Event Id>         1Source API Endpoint to query Events by event_id
+  -c <Contract Id>      1Source API Endpoint to query Contracts by contract_id
+  -ch <Contract Id>     1Source API Endpoint to query Contract History by contract_id
+  -p <Party Id>         1Source API Endpoint to query Parties by party_id```
 
-  -cp            1Source API Endpoint to PROPOSE a contract from a JSON file
-  -cc            1Source API Endpoint to CANCEL a proposed contract by contract_id
-  -ca            1Source API Endpoint to APPROVE a proposed contract by contract_id
-  -cd            1Source API Endpoint to DECLINE a proposed contract by contract_id
-```
-
-The '-t' command line parameter specifies the application TOML configuration file and is required, even if no other command line parameters are included.
 
 The default TOML configuration file is called 'configuration.toml' and is included in the repository.
-
-```
-1source-python> ./1source -t configuration.toml
-
-```
 
 The 1Source REST API can return the following entities:
 * events
@@ -103,150 +91,89 @@ The 1Source REST API can return the following entities:
 To retrieve all events which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -g events
+(1source-python) C:\dev\1source-python>python main.py -g events
 ```
 
 The output of the command to retrieve events will be a JSON response from the 1Source REST API similar to:
 ```
-1Source events
-==============
+'1Source Events for TestLender1User:'
 [
-  {
-    "eventDateTime": "2023-11-02T13:42:16.049Z",
-    "eventId": 10012358,
-    "eventType": "TRADE",
-    "resourceUri": "/v1/ledger/agreements/2cf9d8cc-2b77-49bf-8bb2-9956aaf9cf97"
-  },
-
-  .
-  .
-  .
-
-  {
-    "eventDateTime": "2023-11-02T11:00:05.436Z",
-    "eventId": 10012335,
-    "eventType": "TRADE",
-    "resourceUri": "/v1/ledger/agreements/ed0b656e-6931-4b85-b5be-1bbe6b71b099"
-  }
+   {
+      'eventId': '12201f69e056374d72ac60a0514375a2d0ba7d22b7f350a64cef8109c923e6caad65:12',
+      'eventType': 'CONTRACT_PROPOSED',
+      'eventDateTime': '2024-03-28T11:49:27.468193Z',
+      'resourceUri': '/v1/ledger/contracts/492c7066-eabc-4030-bbc0-7bd7141e3545'
+   }
 ]
-```
-
-The REST API can be queried for a particular event with an event_id
-```
-1source-python> ./1source -t configuration.toml -e 10012349
-```
-
-The expected response for that call would be similar to:
-```
-1Source event
-=============
-{
-  "eventDateTime": "2023-11-02T11:00:11.448Z",
-  "eventId": 10012349,
-  "eventType": "TRADE",
-  "resourceUri": "/v1/ledger/agreements/d7f0cf8d-2c8f-4741-bf4c-3e793b67a0ee"
-}
-```
 
 #### Parties
 Similar to the Events call, to retrieve all parties which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -g parties
+(1source-python) C:\dev\1source-python>python main.py -g parties
 ```
 
 The REST API can be queried for a particular party with a party_id
 ```
-1source-python> ./1source -t configuration.toml -p XXXX-US
+(1source-python) C:\dev\1source-python>python main.py -p <Party Id>
 ```
 
-#### Agreements
-Similar to the Events call, to retrieve all agreements which the user is authorized to view, the following command will do so:
+#### Trade Agreements
+Similar to the Events call, to retrieve all trade agreements which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -o agreements
+(1source-python) C:\dev\1source-python>python main.py -g agreements
 ```
 
 The REST API can be queried for a particular agreement with an agreement_id
 ```
-1source-python> ./1source -t configuration.toml -a 56e7a7fb-309b-4f49-b92f-b789b37e3f07
+(1source-python) C:\dev\1source-python>python main.py -a <Trade Agreement Id>
 ```
 
 #### Contracts
 Similar to the Events call, to retrieve all contracts which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -g contracts
+(1source-python) C:\dev\1source-python>python main.py -g contracts
 ```
 
 The REST API can be queried for a particular contract with a contract_id
 ```
-1source-python> ./1source -t configuration.toml -c c2098d72-89c0-49f7-829a-e9
+(1source-python) C:\dev\1source-python>python main.py -c <Contract Id>
+```
+
+The REST API can be queried for the history of a particular contract with a contract_id
+```
+(1source-python) C:\dev\1source-python>python main.py -ch <Contract Id>
 ```
 
 #### Rerates
 Similar to the Events call, to retrieve all rerates which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -g rerates
+(1source-python) C:\dev\1source-python>python main.py -g rerates
 ```
 
 #### Returns
 Similar to the Events call, to retrieve all returns which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -g returns
+(1source-python) C:\dev\1source-python>python main.py -g returns
 ```
 
 #### Recalls
 Similar to the Events call, to retrieve all recalls which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -g recalls
+(1source-python) C:\dev\1source-python>python main.py -g recalls
 ```
 
 #### Buyins
 Similar to the Events call, to retrieve all buyins which the user is authorized to view, the following command will do so:
 
 ```
-1source-python> ./1source -t configuration.toml -g buyins
+(1source-python) C:\dev\1source-python>python main.py -g buyins
 ```
-
-### Proposing a Contract
-The 1Source command line application supports proposing a new contract. The command to do that is:
-
-```
-1source-python> ./1source -t configuration.toml -cp <JSON contract file>
-```
-* The application will read in the data from the JSON file and post it to the 1Source API to directly create a new contract in a 'PROPOSED' state. 
-* The project contains a sample JSON contract file called 'proposed_trade.json'.
-
-### Canceling a Contract
-The 1Source command line application supports canceling a proposed contract. The command to do that is:
-
-```
-1source-python> ./1source -t configuration.toml -cc <contract_id>
-```
-* The application will retrieve the contract and verify it is in a "PROPOSED" state before canceling.
-* Only the original proposer of the contract can cancel it. The counterparty can decline the proposed contract instead.
-
-### Approving a Contract
-The 1Source command line application supports approving a proposed contract. The command to do that is:
-
-```
-1source-python> ./1source -t configuration.toml -ca <contract_id>
-```
-* The application will retrieve the contract and verify it is in a "PROPOSED" state before approving.
-* Only the counterparty to the original proposer of the contract can approve it. The original contract proposer can cancel it instead.
-
-### Declining a Contract
-The 1Source command line application supports decling a proposed contract. The command to do that is:
-
-```
-1source-python> ./1source -t configuration.toml -cd <contract_id>
-```
-* The application will retrieve the contract and verify it is in a "PROPOSED" state before declining.
-* Only the counterparty to the original proposer of the contract can decline it. The original contract proposer can cancel it instead.
 
 ### Notes
 * The 1Source command line application logs output to a file called '1source-python.log'.
@@ -285,6 +212,7 @@ Contributors names and contact info
 * 0.2
     * Refactor code
     * Add support for rerates, returns, recalls, buyins
-
-## Acknowledgments
-
+* 0.3
+    * Fix typos caused by copy-paste
+    * Format with Python details
+s
