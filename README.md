@@ -105,6 +105,7 @@ The output of the command to retrieve events will be a JSON response from the 1S
       'resourceUri': '/v1/ledger/contracts/492c7066-eabc-4030-bbc0-7bd7141e3545'
    }
 ]
+```
 
 #### Parties
 Similar to the Events call, to retrieve all parties which the user is authorized to view, the following command will do so:
